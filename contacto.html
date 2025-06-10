@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contacto | Tienda de Vapers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rubik:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* RESET Y BASE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Rubik', sans-serif;
+    }
+    body {
+      background: #121212;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* MENÚ HAMBURGUESA */
+    .menu-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 35px;
+      height: 30px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .menu-toggle div {
+      background: #ff3c00;
+      height: 5px;
+      margin: 6px 0;
+      border-radius: 3px;
+      transition: 0.4s;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      right: -250px;
+      height: 100%;
+      width: 250px;
+      background: #1f1f1f;
+      padding-top: 60px;
+      transition: right 0.3s ease;
+      box-shadow: -5px 0 15px rgba(255, 60, 0, 0.5);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    nav a {
+      color: #ff3c00;
+      text-decoration: none;
+      font-size: 1.3rem;
+      padding: 10px 20px;
+      border-left: 5px solid transparent;
+      transition: border-color 0.3s;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    nav a:hover {
+      border-left: 5px solid #ff3c00;
+      background: rgba(255, 60, 0, 0.1);
+    }
+
+    input[type="checkbox"]:checked ~ nav {
+      right: 0;
+    }
+    input[type="checkbox"]:checked + .menu-toggle div:nth-child(1) {
+      transform: rotate(45deg) translate(7px, 7px);
+    }
+    input[type="checkbox"]:checked + .menu-toggle div:nth-child(2) {
+      opacity: 0;
+    }
+    input[type="checkbox"]:checked + .menu-toggle div:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    header {
+      padding: 2rem 1rem 1rem;
+      text-align: center;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 3rem;
+      color: #ff3c00;
+      text-shadow: 2px 2px 5px #7a0000;
+      letter-spacing: 2px;
+      user-select: none;
+    }
+
+    main {
+      flex-grow: 1;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      background: #222;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #ff3c00aa;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    label {
+      font-weight: 700;
+      color: #ff7f50;
+      font-size: 1.1rem;
+      user-select: none;
+    }
+
+    input, textarea {
+      background: #333;
+      border: 2px solid #ff3c00;
+      border-radius: 8px;
+      color: #fff;
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-family: 'Rubik', sans-serif;
+      transition: border-color 0.3s ease;
+      resize: vertical;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #ffa14a;
+      box-shadow: 0 0 8px #ffa14a;
+    }
+
+    textarea {
+      min-height: 120px;
+    }
+
+    button {
+      background: #ff3c00;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 0.7rem;
+      cursor: pointer;
+      box-shadow: 0 0 12px #ff3c00bb;
+      transition: background-color 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      user-select: none;
+    }
+    button:hover {
+      background: #ff5f1c;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a1a;
+      padding: 1rem 0;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #bbb;
+      box-shadow: inset 0 2px 5px #ff3c00aa;
+      user-select: none;
+    }
+    footer .redes {
+      margin-top: 0.7rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    footer .redes a {
+      color: #ff3c00;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    footer .redes a:hover {
+      color: #ffa14a;
+    }
+
+    svg {
+      vertical-align: middle;
+      fill: currentColor;
+      width: 24px;
+      height: 24px;
+    }
+
+    @media (max-width: 640px) {
+      main {
+        margin: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <input type="checkbox" id="menu-toggle" style="display:none" />
+  <label class="menu-toggle" for="menu-toggle">
+    <div></div>
+    <div></div>
+    <div></div>
+  </label>
+
+  <nav>
+    <a href="index.html">Inicio</a>
+    <a href="catalogo.html">Catálogo</a>
+    <a href="contacto.html">Contacto</a>
+  </nav>
+
+  <header>Contacto</header>
+
+  <main>
+    <form action="#" method="post">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+
+      <label for="email">Correo Electrónico:</label>
+      <input type="email" id="email" name="email" placeholder="tucorreo@ejemplo.com" required />
+
+      <label for="mensaje">Mensaje:</label>
+      <textarea id="mensaje" name="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </main>
+
+  <footer>
+    &copy; 2025 Tienda de Vapers. Todos los derechos reservados.
+    <div class="redes">
+      <a href="https://instagram.com" target="_blank" aria-label="Instagram" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 3a1 1 0 110 2 1 1 0 010-2zm-5 1.5A4.5 4.5 0 1111.5 16 4.5 4.5 0 0112 6.5zm0 7A2.5 2.5 0 10014.5 11 2.5 2.5 0 0012 13.5z"/></svg>
+      </a>
+      <a href="https://facebook.com" target="_blank" aria-label="Facebook" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.5 9.87v-6.98h-2.42V12h2.42v-2.18c0-2.39 1.43-3.7 3.63-3.7 1.05 0 2.15.19 2.15.19v2.37h-1.22c-1.2 0-1.57.74-1.57 1.5V12h2.68l-.43 2.89h-2.25v6.98A10 10 0 0022 12z"/></svg>
+      </a>
+      <a href="https://twitter.com" target="_blank" aria-label="X (Twitter)" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14.86 5.48 5.48 0 002.4-3.02 10.86 10.86 0 01-3.45 1.32A5.44 5.44 0 0016.45 2c-3.07 0-5.56 2.49-5.56 5.56 0 .43.05.85.14 1.25-4.62-.23-8.72-2.45-11.48-5.81a5.56 5.56 0 00-.75 2.79c0 1.93.98 3.63 2.46 4.63a5.51 5.51 0 01-2.52-.7v.07c0 2.68 1.9 4.91 4.43 5.42a5.5 5.5 0 01-2.5.1c.71 2.21 2.77 3.82 5.21 3.87A11 11 0 012 19.54 15.45 15.45 0 008.29 21c9.17 0 14.18-7.6 14.18-14.18 0-.22 0-.44-.01-.66A10.16 10.16 0 0023 3z"/></svg>
+      </a>
+    </div>
+  </footer>
+
+</body>
+</html>

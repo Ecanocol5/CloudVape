@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - CloudVape</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --warning: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --dark: #0a0a0a;
+            --light: #ffffff;
+            --glass: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-attachment: fixed;
+            color: var(--light);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+        }
+
+        .checkout-steps {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            opacity: 1;
+            color: #4facfe;
+        }
+
+        .step.completed {
+            opacity: 1;
+            color: #38ef7d;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--glass);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step.active .step-number {
+            background: var(--accent);
+        }
+
+        .step.completed .step-number {
+            background: var(--success);
+        }
+
+        .checkout-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 3rem;
+        }
+
+        .checkout-form {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .payment-method {
+            padding: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            background: var(--glass);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            border-color: #4facfe;
+            transform: translateY(-5px);
+        }
+
+        .payment-method.selected {
+            border-color: #4facfe;
+            background: rgba(79, 172, 254, 0.2);
+        }
+
+        .payment-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .order-summary {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            background: var(--secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .item-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .total-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .total-row.final {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #4facfe;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--accent);
+            border: none;
+            border-radius: 15px;
+            color: var(--light);
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .security-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(56, 239, 125, 0.1);
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+
+        .discount-code {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .discount-input {
+            flex: 1;
+        }
+
+        .apply-btn {
+            padding: 1rem 2rem;
+            background: var(--secondary);
+            border: none;
+            border-radius: 15px;
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .apply-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-steps {
+                display: none;
+            }
+
+            .nav {
+                padding: 0 1rem;
+            }
+
+            .checkout-form,
+            .order-summary {
+                padding: 2rem 1.5rem;
+            }
+
+            .payment-methods {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-particles" id="particles"></div>
+
+    <header class="header">
+        <nav class="nav">
+            <div class="logo" onclick="window.location.href='index.html'">☁️ CloudVape</div>
+            <div class="checkout-steps">
+                <div class="step completed">
+                    <div class="step-number">1</div>
+                    <span>Carrito</span>
+                </div>
+                <div class="step active">
+                    <div class="step-number">2</div>
+                    <span>Datos</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <span>Pago</span>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <span>Confirmación</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="checkout-container">
+        <div class="checkout-form">
+            <form id="checkoutForm">
+                <div class="form-section">
+                    <h2 class="section-title">📍 Información de Envío</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-input" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Apellidos</label>
+                            <input type="text" class="form-input" placeholder="Tus apellidos" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" placeholder="tu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Teléfono</label>
+                            <input type="tel" class="form-input" placeholder="+34 600 000 000" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Código Postal</label>
+                            <input type="text" class="form-input" placeholder="28001" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label class="form-label">Dirección</label>
+                            <input type="text" class="form-input" placeholder="Calle, Número, Piso" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Ciudad</label>
+                            <input type="text" class="form-input" placeholder="Madrid" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Provincia</label>
+                            <input type="text" class="form-input" placeholder="Madrid" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 class="section-title">💳 Método de Pago</h2>
+                    <div class="payment-methods">
+                        <div class="payment-method selected" data-method="card">
+                            <div class="payment-icon">💳</div>
+                            <div>Tarjeta</div>
+                        </div>
+                        <div class="payment-method" data-method="paypal">
+                            <div class="payment-icon">🅿️</div>
+                            <div>PayPal</div>
+                        </div>
+                        <div class="payment-method" data-method="bizum">
+                            <div class="payment-icon">📱</div>
+                            <div>Bizum</div>
+                        </div>
+                        <div class="payment-method" data-method="crypto">
+                            <div class="payment-icon">₿</div>
+                            <div>Crypto</div>
+                        </div>
+                    </div>
+
+                    <div id="cardDetails" class="form-grid" style="margin-top: 2rem;">
+                        <div class="form-group full-width">
+                            <label class="form-label">Número de Tarjeta</label>
+                            <input type="text" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Fecha de Expiración</label>
+                            <input type="text" class="form-input" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">CVV</label>
+                            <input type="text" class="form-input" placeholder="123" maxlength="3">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="order-summary">
+            <h3 class="summary-title">🛒 Resumen del Pedido</h3>
+            
+            <div class="summary-item">
+                <div class="item-info">
+                    <div class="item-image">💨</div>
+                    <div>
+                        <div>Vape Pro Max</div>
+                        <small>Cantidad: 2</small>
+                    </div>
+                </div>
+                <div>€89.98</div>
+            </div>
+
+            <div class="summary-item">
+                <div class="item-info">
+                    <div class="item-image">🔋</div>
+                    <div>
+                        <div>Liquid Tropical</div>
+                        <small>Cantidad: 3</small>
+                    </div>
+                </div>
+                <div>€35.97</div>
+            </div>
+
+            <div class="discount-code">
+                <input type="text" class="form-input discount-input" placeholder="Código descuento">
+                <button type="button" class="apply-btn">Aplicar</button>
+            </div>
+
+            <div class="total-section">
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span>€125.95</span>
+                </div>
+                <div class="total-row">
+                    <span>Envío:</span>
+                    <span>€4.99</span>
+                </div>
+                <div class="total-row">
+                    <span>IVA (21%):</span>
+                    <span>€26.45</span>
+                </div>
+                <div class="total-row final">
+                    <span>Total:</span>
+                    <span>€157.39</span>
+                </div>
+            </div>
+
+            <button class="checkout-btn" id="finalizeOrder">
+                🚀 Finalizar Pedido
+            </button>
+
+            <div class="security-info">
+                <span>🔒</span>
+                <span>Pago 100% seguro y encriptado</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Crear partículas flotantes
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.width = Math.random() * 10 + 5 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Manejo de métodos de pago
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', function() {
+                document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                const methodType = this.dataset.method;
+                const cardDetails = document.getElementById('cardDetails');
+                
+                if (methodType === 'card') {
+                    cardDetails.style.display = 'grid';
+                } else {
+                    cardDetails.style.display = 'none';
+                }
+            });
+        });
+
+        // Formatear número de tarjeta
+        document.querySelector('input[placeholder="1234 5678 9012 3456"]').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+
+        // Formatear fecha de expiración
+        document.querySelector('input[placeholder="MM/YY"]').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+
+        // Finalizar pedido
+        document.getElementById('finalizeOrder').addEventListener('click', function() {
+            const button = this;
+            button.innerHTML = '⏳ Procesando...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = '✅ ¡Pedido Confirmado!';
+                setTimeout(() => {
+                    alert('¡Pedido realizado con éxito! Te hemos enviado un email de confirmación.');
+                    window.location.href = 'index.html';
+                }, 1000);
+            }, 2000);
+        });
+
+        // Aplicar código de descuento
+        document.querySelector('.apply-btn').addEventListener('click', function() {
+            const input = document.querySelector('.discount-input');
+            const code = input.value.toUpperCase();
+            
+            if (code === 'CLOUD20') {
+                alert('¡Código aplicado! 20% de descuento');
+                input.style.borderColor = '#38ef7d';
+                this.innerHTML = '✅ Aplicado';
+                this.disabled = true;
+            } else if (code) {
+                alert('Código no válido');
+                input.style.borderColor = '#f5576c';
+            }
+        });
+
+        // Inicializar
+        createParticles();
+
+        // Animación de scroll suave para inputs
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -282,6 +282,12 @@
             box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
+        .view-all-products {
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+        }
+
         /* Cart */
         .cart-sidebar {
             position: fixed;

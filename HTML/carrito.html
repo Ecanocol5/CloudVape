@@ -427,17 +427,19 @@
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="../index.html" class="logo">CloudVape</a>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo" onclick="window.location.href='../index.html'">☁️ CloudVape</div>
             <ul class="nav-links">
                 <li><a href="../index.html">Inicio</a></li>
-                <li><a href="../products/products.html">Productos</a></li>
-                <li><a href="../about.html">Nosotros</a></li>
-                <li><a href="../contact.html">Contacto</a></li>
-                <li><a href="../login.html">Login</a></li>
-                <li><a href="cart.html" class="active">🛒</a></li>
+                <li><a href="HTML/productos.html">Productos</a></li>
+                <li><a href="HTML/about.html">Sobre Nosotros</a></li>
+                <li><a href="HTML/contacto.html">Contacto</a></li>
             </ul>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒
+                <span class="cart-count">0</span>
+            </div>
             <button class="mobile-menu">☰</button>
         </nav>
     </header>

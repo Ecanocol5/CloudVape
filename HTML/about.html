@@ -8,6 +8,8 @@
     <link rel="preload" href="../CSS/about.css" as="style">
     <link rel="stylesheet" href="../CSS/normalize.css">
     <link rel="stylesheet" href="../CSS/about.css">
+    <link rel="preload" href="../JS/about.js" as="script">
+    <link rel="preload" href="../JS/carrito.js" as="script">
 </head>
 <body>
     <div class="floating-particles" id="particles"></div>
@@ -16,9 +18,9 @@
             <div class="logo" onclick="window.location.href='../index.html'">☁️ CloudVape</div>
             <ul class="nav-links">
                 <li><a href="../index.html">Inicio</a></li>
-                <li><a href="HTML/productos.html">Productos</a></li>
-                <li><a href="HTML/about.html">Sobre Nosotros</a></li>
-                <li><a href="HTML/contacto.html">Contacto</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="about.html">Sobre Nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
             </ul>
             <div class="cart-icon" onclick="toggleCart()">
                 🛒
@@ -156,224 +158,7 @@
             <button class="checkout-btn" onclick="checkout()">Proceder al Pago</button>
         </div>
     </div>
-
-    <script>
-        // Crear partículas flotantes
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.width = Math.random() * 8 + 3 + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // Animación de contador para estadísticas
-        function animateCounter(element, target, suffix = '') {
-            let current = 0;
-            const increment = target / 100;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                element.textContent = Math.floor(current) + suffix;
-            }, 20);
-        }
-
-        // Observer para animar contadores cuando entran en vista
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const statNumber = entry.target.querySelector('.stat-number');
-                    const text = statNumber.textContent;
-                    
-                    if (text.includes('K+')) {
-                        animateCounter(statNumber, 50, 'K+');
-                    } else if (text.includes('+')) {
-                        animateCounter(statNumber, 500, '+');
-                    } else if (text.includes('%')) {
-                        animateCounter(statNumber, 99.9, '%');
-                    } else if (text.includes('24/7')) {
-                        statNumber.textContent = '24/7';
-                    }
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        });
-
-        // Observar tarjetas de estadísticas
-        document.querySelectorAll('.stat-card').forEach(card => {
-            observer.observe(card);
-        });
-
-        // Efecto parallax suave
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.floating-emoji');
-            
-            parallaxElements.forEach((element, index) => {
-                const speed = 0.5 + (index * 0.2);
-                element.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
-
-        // Animación de entrada para las cartas
-        const animateOnScroll = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        });
-
-        document.querySelectorAll('.value-card, .team-member').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'all 0.6s ease';
-            animateOnScroll.observe(card);
-        });
-
-        // Inicializar
-        createParticles();
-
-        // Efecto hover para miembros del equipo
-        document.querySelectorAll('.team-member').forEach(member => {
-            member.addEventListener('mouseenter', function() {
-                this.style.background = 'linear-gradient(135deg, rgba(79, 172, 254, 0.2), rgba(0, 242, 254, 0.2))';
-            });
-            
-            member.addEventListener('mouseleave', function() {
-                this.style.background = 'rgba(255, 255, 255, 0.1)';
-            });
-        });
-
-                      // Cart functionality
-        function toggleCart() {
-            const cartSidebar = document.getElementById('cartSidebar');
-            cartSidebar.classList.toggle('open');
-        }
-
-        function addToCart(name, price) {
-            const existingItem = cart.find(item => item.name === name);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    name: name,
-                    price: price,
-                    quantity: 1
-                });
-            }
-            
-            updateCart();
-            
-            // Visual feedback
-            const button = event.target;
-            const originalText = button.textContent;
-            button.innerHTML = '<span class="loading"></span>';
-            button.disabled = true;
-            
-            setTimeout(() => {
-                button.textContent = '¡Añadido!';
-                button.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
-                
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.background = '';
-                    button.disabled = false;
-                }, 1000);
-            }, 800);
-        }
-
-        function removeFromCart(name) {
-            cart = cart.filter(item => item.name !== name);
-            updateCart();
-        }
-
-        function updateCart() {
-            const cartItems = document.getElementById('cartItems');
-            const cartCount = document.querySelector('.cart-count');
-            const cartTotalElement = document.getElementById('cartTotal');
-            
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<p style="text-align: center; opacity: 0.7;">Tu carrito está vacío</p>';
-                cartCount.textContent = '0';
-                cartTotal = 0;
-            } else {
-                let itemsHTML = '';
-                let totalItems = 0;
-                cartTotal = 0;
-                
-                cart.forEach(item => {
-                    totalItems += item.quantity;
-                    cartTotal += item.price * item.quantity;
-                    
-                    itemsHTML += `
-                        <div class="cart-item">
-                            <div class="cart-item-image">
-                                ${getProductIcon(item.name)}
-                            </div>
-                            <div style="flex: 1;">
-                                <h4>${item.name}</h4>
-                                <p>€${item.price} x ${item.quantity}</p>
-                            </div>
-                            <button onclick="removeFromCart('${item.name}')" 
-                                    style="background: transparent; border: none; color: #ff4757; font-size: 1.2rem; cursor: pointer;">
-                                ×
-                            </button>
-                        </div>
-                    `;
-                });
-                
-                cartItems.innerHTML = itemsHTML;
-                cartCount.textContent = totalItems;
-            }
-            
-            cartTotalElement.textContent = cartTotal.toFixed(2);
-        }
-
-        // Prevent cart from closing when clicking inside
-        document.getElementById('cartSidebar').addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
-
-        // Close cart when clicking outside
-        document.addEventListener('click', (e) => {
-            const cartSidebar = document.getElementById('cartSidebar');
-            const cartIcon = document.querySelector('.cart-icon');
-            
-            if (!cartSidebar.contains(e.target) && !cartIcon.contains(e.target)) {
-                cartSidebar.classList.remove('open');
-            }
-        });
-
-                // Mobile menu toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            if (navLinks.style.display === 'flex') {
-                navLinks.style.display = 'none';
-            } else {
-                navLinks.style.display = 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '100%';
-                navLinks.style.left = '0';
-                navLinks.style.width = '100%';
-                navLinks.style.background = 'rgba(0, 0, 0, 0.9)';
-                navLinks.style.padding = '1rem';
-                navLinks.style.backdropFilter = 'blur(20px)';
-            }
-        });
-    </script>
+    <script src="../JS/about.js" defer></script>
+    <script src="../JS/carrito.js" defer></script>
 </body>
 </html>

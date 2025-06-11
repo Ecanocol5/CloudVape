@@ -1,496 +1,34 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - CloudVape</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --success: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            --warning: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            --dark: #0a0a0a;
-            --light: #ffffff;
-            --glass: rgba(255, 255, 255, 0.1);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            background-attachment: fixed;
-            color: var(--light);
-            line-height: 1.6;
-        }
-
-        .header {
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(20px);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            background: var(--accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            cursor: pointer;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: var(--light);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #4facfe;
-            transform: translateY(-2px);
-        }
-
-        .hero-section {
-            text-align: center;
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: bold;
-            background: var(--accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-
-        .contact-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem 4rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        .contact-form {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 3rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: slideInLeft 1s ease-out;
-        }
-
-        .contact-info {
-            animation: slideInRight 1s ease-out;
-        }
-
-        .form-title {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            background: var(--secondary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .form-group {
-            margin-bottom: 2rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--light);
-            font-weight: 500;
-        }
-
-        .form-input,
-        .form-textarea,
-        .form-select {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--light);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-input:focus,
-        .form-textarea:focus,
-        .form-select:focus {
-            outline: none;
-            border-color: #4facfe;
-            box-shadow: 0 0 20px rgba(79, 172, 254, 0.3);
-            transform: scale(1.02);
-        }
-
-        .form-input::placeholder,
-        .form-textarea::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .form-select option {
-            background: #333;
-            color: white;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1.2rem;
-            background: var(--accent);
-            border: none;
-            border-radius: 15px;
-            color: var(--light);
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        .loading {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top: 2px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .success-message {
-            background: var(--success);
-            color: white;
-            padding: 1rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            display: none;
-            animation: fadeInUp 0.5s ease-out;
-        }
-
-        .contact-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .contact-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-        }
-
-        .contact-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .contact-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            background: var(--accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .contact-detail {
-            font-size: 1rem;
-            opacity: 0.9;
-            margin-bottom: 0.5rem;
-        }
-
-        .social-section {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-            text-align: center;
-        }
-
-        .social-title {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            background: var(--secondary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .social-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .social-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 2rem;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: var(--light);
-        }
-
-        .social-card:hover {
-            transform: translateY(-10px) rotate(5deg);
-            box-shadow: var(--shadow);
-        }
-
-        .social-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .social-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .social-handle {
-            opacity: 0.7;
-            font-size: 0.9rem;
-        }
-
-        .faq-section {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-        }
-
-        .faq-title {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            background: var(--accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .faq-item {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-question {
-            padding: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .faq-question:hover {
-            background: rgba(79, 172, 254, 0.1);
-        }
-
-        .faq-answer {
-            padding: 0 1.5rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            opacity: 0;
-        }
-
-        .faq-item.active .faq-answer {
-            padding: 1.5rem;
-            max-height: 200px;
-            opacity: 1;
-        }
-
-        .faq-icon {
-            font-size: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(180deg);
-        }
-
-        .floating-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .contact-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .contact-form,
-            .contact-info {
-                animation: fadeInUp 1s ease-out;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .nav {
-                padding: 0 1rem;
-            }
-
-            .social-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
+    <link rel="preload" href="../CSS/normalize.css" as="style">
+    <link rel="preload" href="../CSS/index.css" as="style">
+    <link rel="preload" href="../JS/carrito.js" as="script">
+    <link rel="stylesheet" href="../CSS/normalize.css">
+    <link rel="stylesheet" href="../CSS/contacto.css">
 </head>
+
 <body>
     <div class="floating-particles" id="particles"></div>
 
     <header class="header">
         <nav class="nav">
-            <div class="logo" onclick="window.location.href='index.html'">☁️ CloudVape</div>
+            <div class="logo" onclick="window.location.href='../index.html'">☁️ CloudVape</div>
             <ul class="nav-links">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="about.html">Nosotros</a></li>
-                <li><a href="contact.html">Contacto</a></li>
-                <li><a href="login.html">Login</a></li>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="about.html">Sobre Nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
             </ul>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒
+                <span class="cart-count">0</span>
+            </div>
+            <button class="mobile-menu">☰</button>
         </nav>
     </header>
 
@@ -534,7 +72,8 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">Mensaje *</label>
-                    <textarea class="form-textarea" name="message" placeholder="Cuéntanos en qué podemos ayudarte..." required></textarea>
+                    <textarea class="form-textarea" name="message" placeholder="Cuéntanos en qué podemos ayudarte..."
+                        required></textarea>
                 </div>
                 <button type="submit" class="submit-btn" id="submitBtn">
                     <span id="btnText">Enviar Mensaje 🚀</span>
@@ -616,14 +155,15 @@
 
     <section class="faq-section">
         <h2 class="faq-title">Preguntas Frecuentes ❓</h2>
-        
+
         <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(this)">
                 <span>¿Cuánto tiempo tardan en responder?</span>
                 <span class="faq-icon">▼</span>
             </div>
             <div class="faq-answer">
-                <p>Respondemos a todos los mensajes en un plazo máximo de 24 horas durante días laborables. Para consultas urgentes, puedes contactarnos por WhatsApp.</p>
+                <p>Respondemos a todos los mensajes en un plazo máximo de 24 horas durante días laborables. Para
+                    consultas urgentes, puedes contactarnos por WhatsApp.</p>
             </div>
         </div>
 
@@ -633,7 +173,8 @@
                 <span class="faq-icon">▼</span>
             </div>
             <div class="faq-answer">
-                <p>Sí, ofrecemos soporte técnico completo para todos nuestros productos. Nuestro equipo técnico está disponible para ayudarte con configuración, mantenimiento y resolución de problemas.</p>
+                <p>Sí, ofrecemos soporte técnico completo para todos nuestros productos. Nuestro equipo técnico está
+                    disponible para ayudarte con configuración, mantenimiento y resolución de problemas.</p>
             </div>
         </div>
 
@@ -643,7 +184,8 @@
                 <span class="faq-icon">▼</span>
             </div>
             <div class="faq-answer">
-                <p>Sí, tenemos una tienda física en Madrid donde puedes ver y probar nuestros productos. También ofrecemos asesoramiento personalizado con cita previa.</p>
+                <p>Sí, tenemos una tienda física en Madrid donde puedes ver y probar nuestros productos. También
+                    ofrecemos asesoramiento personalizado con cita previa.</p>
             </div>
         </div>
 
@@ -653,7 +195,8 @@
                 <span class="faq-icon">▼</span>
             </div>
             <div class="faq-answer">
-                <p>Sí, realizamos envíos a toda España y también a otros países de la UE. Los gastos de envío varían según el destino y el peso del pedido.</p>
+                <p>Sí, realizamos envíos a toda España y también a otros países de la UE. Los gastos de envío varían
+                    según el destino y el peso del pedido.</p>
             </div>
         </div>
 
@@ -663,155 +206,28 @@
                 <span class="faq-icon">▼</span>
             </div>
             <div class="faq-answer">
-                <p>Todos nuestros productos incluyen garantía del fabricante. Además, ofrecemos 14 días para devoluciones sin preguntas y soporte post-venta completo.</p>
+                <p>Todos nuestros productos incluyen garantía del fabricante. Además, ofrecemos 14 días para
+                    devoluciones sin preguntas y soporte post-venta completo.</p>
             </div>
         </div>
     </section>
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Tu Carrito</h2>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div id="cartItems">
+            <p style="text-align: center; opacity: 0.7;">Tu carrito está vacío</p>
+        </div>
+        <div class="cart-total">
+            <h3>Total: €<span id="cartTotal">0.00</span></h3>
+            <button class="checkout-btn" onclick="checkout()">Proceder al Pago</button>
+        </div>
+    </div>
 
-    <script>
-        // Crear partículas flotantes
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
-
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                const size = Math.random() * 6 + 2;
-                const left = Math.random() * 100;
-                const delay = Math.random() * 6;
-                
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.left = left + '%';
-                particle.style.animationDelay = delay + 's';
-                particle.style.top = Math.random() * 100 + '%';
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // Manejar el formulario de contacto
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const btnText = document.getElementById('btnText');
-            const loading = document.getElementById('loading');
-            const successMessage = document.getElementById('successMessage');
-            
-            // Mostrar loading
-            btnText.style.display = 'none';
-            loading.style.display = 'block';
-            submitBtn.disabled = true;
-            
-            // Simular envío (en una aplicación real, aquí enviarías los datos al servidor)
-            setTimeout(() => {
-                // Ocultar loading
-                btnText.style.display = 'inline';
-                loading.style.display = 'none';
-                submitBtn.disabled = false;
-                
-                // Mostrar mensaje de éxito
-                successMessage.style.display = 'block';
-                
-                // Limpiar formulario
-                this.reset();
-                
-                // Ocultar mensaje después de 5 segundos
-                setTimeout(() => {
-                    successMessage.style.display = 'none';
-                }, 5000);
-                
-                // Scroll suave al mensaje
-                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 2000);
-        });
-
-        // Toggle FAQ
-        function toggleFaq(element) {
-            const faqItem = element.parentNode;
-            const isActive = faqItem.classList.contains('active');
-            
-            // Cerrar todos los FAQs
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Abrir el clickeado si no estaba activo
-            if (!isActive) {
-                faqItem.classList.add('active');
-            }
-        }
-
-        // Efectos de hover para las tarjetas sociales
-        document.querySelectorAll('.social-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.background = 'linear-gradient(135deg, rgba(79, 172, 254, 0.2) 0%, rgba(0, 242, 254, 0.2) 100%)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.background = 'rgba(255, 255, 255, 0.1)';
-            });
-        });
-
-        // Validación en tiempo real del formulario
-        const formInputs = document.querySelectorAll('.form-input, .form-textarea, .form-select');
-        formInputs.forEach(input => {
-            input.addEventListener('blur', function() {
-                if (this.hasAttribute('required') && !this.value.trim()) {
-                    this.style.borderColor = '#ff6b6b';
-                    this.style.boxShadow = '0 0 20px rgba(255, 107, 107, 0.3)';
-                } else if (this.type === 'email' && this.value && !isValidEmail(this.value)) {
-                    this.style.borderColor = '#ff6b6b';
-                    this.style.boxShadow = '0 0 20px rgba(255, 107, 107, 0.3)';
-                } else {
-                    this.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                    this.style.boxShadow = 'none';
-                }
-            });
-            
-            input.addEventListener('input', function() {
-                if (this.style.borderColor === 'rgb(255, 107, 107)') {
-                    this.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                    this.style.boxShadow = 'none';
-                }
-            });
-        });
-
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
-
-        // Animación de escritura para el hero
-        function typeWriter(element, text, speed = 100) {
-            let i = 0;
-            element.innerHTML = '';
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
-        }
-
-        // Inicializar cuando la página carga
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            
-            // Efecto de paralaje suave en scroll
-            window.addEventListener('scroll', function() {
-                const scrolled = window.pageYOffset;
-                const parallax = document.querySelector('.hero-section');
-                const speed = scrolled * 0.5;
-                parallax.style.transform = `translateY(${speed}px)`;
-            });
-        });
-    </script>
+    <script src="../JS/contacto.js" defer></script>
+    <script src="../JS/carrito.js" defer></script>
 </body>
+
 </html>

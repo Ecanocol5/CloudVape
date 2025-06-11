@@ -1,64 +1,56 @@
-function applyFilters() {
-    const category = document.getElementById('categoryFilter').value;
-    const price = document.getElementById('priceFilter').value;
-    const brand = document.getElementById('brandFilter').value;
-    const search = document.getElementById('searchFilter').value;
+  // Cart functionality
+        let cart = [];
+        let cartCount = 0;
+        let cartTotal = 0;
 
-    console.log('Filtros aplicados:', { category, price, brand, search });
-    alert('Filtros aplicados correctamente. En una implementación real, los productos se filtrarían aquí.');
-}
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            cartSidebar.classList.toggle('open');
+        }
 
-function addToCart(productId) {
-    // Simular agregar al carrito
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const product = {
-        id: productId,
-        name: getProductName(productId),
-        price: getProductPrice(productId),
-        quantity: 1
-    };
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            cartCount++;
+            cartTotal += price;
+            
+            document.querySelector('.cart-count').textContent = cartCount;
+            document.getElementById('cartTotal').textContent = cartTotal.toFixed(2);
+            
+            updateCartDisplay();
+        }
 
-    const existingItem = cart.find(item => item.id === productId);
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push(product);
-    }
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; opacity: 0.7;">Tu carrito está vacío</p>';
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-image">🛍️</div>
+                        <div>
+                            <h4>${item.name}</h4>
+                            <p>€${item.price.toFixed(2)}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
 
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert('Producto añadido al carrito');
-}
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío');
+                return;
+            }
+            alert('Redirigiendo al proceso de pago...');
+        }
 
-function getProductName(id) {
-    const products = {
-        1: 'CloudTech Pro Max',
-        2: 'Premium Mix Fruits',
-        3: 'Power Bank Vape',
-        4: 'VapePro Starter Kit'
-    };
-    return products[id] || 'Producto';
-}
+        function applyFilters() {
+            // Placeholder for filter functionality
+            alert('Filtros aplicados');
+        }
 
-function getProductPrice(id) {
-    const prices = {
-        1: 89.99,
-        2: 12.99,
-        3: 34.99,
-        4: 45.99
-    };
-    return prices[id] || 0;
-}
-
-// Mobile menu functionality
-document.querySelector('.mobile-menu').addEventListener('click', function () {
-    const navLinks = document.querySelector('.nav-links');
-    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-});
-
-// Search functionality
-document.getElementById('searchFilter').addEventListener('input', function (e) {
-    if (e.target.value.length > 2) {
-        // En una implementación real, aquí harías búsqueda en tiempo real
-        console.log('Buscando:', e.target.value);
-    }
-});
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('.nav-links').style.display = 
+                document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex';
+        });

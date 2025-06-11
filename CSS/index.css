@@ -446,3 +446,66 @@
             border-top-color: #fff;
             animation: spin 1s ease-in-out infinite;
         }
+
+.footer 
+
+    .social-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+
+    .social-btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        color: white;
+        text-decoration: none;
+        transition: transform 0.3s ease;
+    }
+
+    .social-btn:hover {
+        transform: translateY(-3px);
+    }
+
+    .tiktok {
+        background: #000000;
+    }
+
+    .facebook {
+        background: #1877f2;
+    }
+
+    .twitter {
+        background: #000000;
+    }
+
+    .instagram {
+        background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+    }
+
+    .whatsapp {
+        background: #25d366;
+    }
+    .footer-contact {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .footer-contact h3 {
+            font-size: 1rem;
+            color: #666;
+            font-weight: normal;
+        }
+
+        .footer-copyright {
+            margin-top: 20px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .footer-copyright p {
+            font-size: 0.9rem;
+            color: #888;
+        }

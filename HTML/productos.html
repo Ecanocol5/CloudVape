@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos - CloudVape</title>
-    <link rel="preload" href="../CSS/productos.css" as="style" rel='stylesheet'">
-    <link rel="preload" href="../JavaScript/productos.js" as="script">
+    <link rel="preload" href="../CSS/normalize.css" as="style">
+    <link rel="preload" href="../CSS/productos.css" as="style">
+    <link rel="stylesheet" href="../CSS/normalize.css">
     <link rel="stylesheet" href="../CSS/productos.css">
+    <link rel="preload" href="../JS/about.js" as="script">
+    <link rel="preload" href="../JS/carrito.js" as="script">
+    <link rel="preload" href="../JS/productos.js" as="script">
 </head>
 <body>
     <!-- Header -->
@@ -26,10 +30,11 @@
             <button class="mobile-menu">☰</button>
         </nav>
     </header>
+
     <main>
         <div class="page-header">
             <h1>Nuestros Productos</h1>
-            <p>Descubre nuestra amplia gama de productos de vaping premium, desde dispositivos hasta líquidos y accesorios</p>
+            <p>Descubre nuestra amplia gama de productos de vaping premium, desde dispositivos hasta líquidos y accesorios de la más alta calidad</p>
         </div>
 
         <div class="filters-section">
@@ -74,7 +79,7 @@
             <div class="category-card" onclick="location.href='vapes.html'">
                 <span class="category-icon">💨</span>
                 <h3>Vapes</h3>
-                <p>Dispositivos de vaping de última generación con tecnología avanzada</p>
+                <p>Dispositivos de vaping de última generación con tecnología avanzada para una experiencia premium</p>
                 <div class="category-stats">
                     <div class="stat">
                         <div class="stat-number">150+</div>
@@ -91,7 +96,7 @@
             <div class="category-card" onclick="location.href='liquids.html'">
                 <span class="category-icon">🧪</span>
                 <h3>Líquidos</h3>
-                <p>Amplia variedad de sabores premium con diferentes niveles de nicotina</p>
+                <p>Amplia variedad de sabores premium con diferentes niveles de nicotina para todos los gustos</p>
                 <div class="category-stats">
                     <div class="stat">
                         <div class="stat-number">200+</div>
@@ -108,7 +113,7 @@
             <div class="category-card" onclick="location.href='accessories.html'">
                 <span class="category-icon">🔧</span>
                 <h3>Accesorios</h3>
-                <p>Todo lo que necesitas para mantener y mejorar tu experiencia de vaping</p>
+                <p>Todo lo que necesitas para mantener y mejorar tu experiencia de vaping al máximo nivel</p>
                 <div class="category-stats">
                     <div class="stat">
                         <div class="stat-number">100+</div>
@@ -133,7 +138,7 @@
                         <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
                     </div>
                     <div class="product-price">€89.99</div>
-                    <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(1)">Añadir al Carrito</button>
+                    <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart('CloudTech Pro Max', 89.99)">Añadir al Carrito</button>
                 </div>
 
                 <div class="product-card" onclick="location.href='../shop/product-detail.html'">
@@ -143,7 +148,7 @@
                         <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
                     </div>
                     <div class="product-price">€12.99</div>
-                    <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(2)">Añadir al Carrito</button>
+                    <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart('Premium Mix Fruits', 12.99)">Añadir al Carrito</button>
                 </div>
 
                 <div class="product-card" onclick="location.href='../shop/product-detail.html'">
@@ -153,7 +158,7 @@
                         <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>☆</span>
                     </div>
                     <div class="product-price">€34.99</div>
-                    <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(3)">Añadir al Carrito</button>
+                    <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart('Power Bank Vape', 34.99)">Añadir al Carrito</button>
                 </div>
 
                 <div class="product-card" onclick="location.href='../shop/product-detail.html'">
@@ -163,15 +168,29 @@
                         <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
                     </div>
                     <div class="product-price">€45.99</div>
-                    <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart(4)">Añadir al Carrito</button>
+                    <button class="btn-add-cart" onclick="event.stopPropagation(); addToCart('VapePro Starter Kit', 45.99)">Añadir al Carrito</button>
                 </div>
             </div>
         </div>
     </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Tu Carrito</h2>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        <div id="cartItems">
+            <p style="text-align: center; opacity: 0.7;">Tu carrito está vacío</p>
+        </div>
+        <div class="cart-total">
+            <h3>Total: €<span id="cartTotal">0.00</span></h3>
+            <button class="checkout-btn" onclick="checkout()">Proceder al Pago</button>
+        </div>
+    </div>
+
     <footer>
-        <p>&copy; 2024 CloudVape. Todos los derechos reservados.</p>
+        <p>&copy; 2025 CloudVape. Todos los derechos reservados.</p>
     </footer>
-    <script src="../JS/productos.js" defer></script>
-    <script src="../JS/carrito.js" defer></script>
 </body>
 </html>

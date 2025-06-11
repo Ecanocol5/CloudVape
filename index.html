@@ -13,7 +13,7 @@
     <!-- Header -->
     <header class="header">
         <nav class="nav">
-            <div class="logo">CloudVape</div>
+            <div class="logo" onclick="window.location.href='../index.html'">☁️ CloudVape</div>
             <ul class="nav-links">
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="HTML/productos.html">Productos</a></li>
@@ -176,7 +176,90 @@
             }
         });
 
-        // Cart functionality
+        function getProductIcon(productName) {
+            const icons = {
+                'Vape Cloud Pro': '💨',
+                'Thunder Mod': '⚡',
+                'Stellar Kit': '🌟',
+                'Fire Storm': '🔥',
+                'Diamond Series': '💎',
+                'Rocket Vape': '🚀'
+            };
+            return icons[productName] || '💨';
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío');
+                return;
+            }
+            
+            alert(`¡Gracias por tu compra!\nTotal: €${cartTotal.toFixed(2)}\n\nTe redirigiremos al proceso de pago...`);
+            
+            // Simular proceso de checkout
+            setTimeout(() => {
+                cart = [];
+                updateCart();
+                toggleCart();
+            }, 2000);
+        }
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'rgba(0, 0, 0, 0.9)';
+                navLinks.style.padding = '1rem';
+                navLinks.style.backdropFilter = 'blur(20px)';
+            }
+        });
+
+        // Parallax effect
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero');
+            const speed = scrolled * 0.5;
+            
+            if (parallax) {
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Product card animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe product cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+        });
+
+              // Cart functionality
         function toggleCart() {
             const cartSidebar = document.getElementById('cartSidebar');
             cartSidebar.classList.toggle('open');
@@ -261,89 +344,6 @@
             
             cartTotalElement.textContent = cartTotal.toFixed(2);
         }
-
-        function getProductIcon(productName) {
-            const icons = {
-                'Vape Cloud Pro': '💨',
-                'Thunder Mod': '⚡',
-                'Stellar Kit': '🌟',
-                'Fire Storm': '🔥',
-                'Diamond Series': '💎',
-                'Rocket Vape': '🚀'
-            };
-            return icons[productName] || '💨';
-        }
-
-        function checkout() {
-            if (cart.length === 0) {
-                alert('Tu carrito está vacío');
-                return;
-            }
-            
-            alert(`¡Gracias por tu compra!\nTotal: €${cartTotal.toFixed(2)}\n\nTe redirigiremos al proceso de pago...`);
-            
-            // Simular proceso de checkout
-            setTimeout(() => {
-                cart = [];
-                updateCart();
-                toggleCart();
-            }, 2000);
-        }
-
-        // Mobile menu toggle
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            if (navLinks.style.display === 'flex') {
-                navLinks.style.display = 'none';
-            } else {
-                navLinks.style.display = 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '100%';
-                navLinks.style.left = '0';
-                navLinks.style.width = '100%';
-                navLinks.style.background = 'rgba(0, 0, 0, 0.9)';
-                navLinks.style.padding = '1rem';
-                navLinks.style.backdropFilter = 'blur(20px)';
-            }
-        });
-
-        // Parallax effect
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallax = document.querySelector('.hero');
-            const speed = scrolled * 0.5;
-            
-            if (parallax) {
-                parallax.style.transform = `translateY(${speed}px)`;
-            }
-        });
-
-        // Product card animations on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe product cards
-        document.addEventListener('DOMContentLoaded', () => {
-            const productCards = document.querySelectorAll('.product-card');
-            productCards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(50px)';
-                card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-                observer.observe(card);
-            });
-        });
 
         // Prevent cart from closing when clicking inside
         document.getElementById('cartSidebar').addEventListener('click', (e) => {

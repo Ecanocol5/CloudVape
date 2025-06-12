@@ -27,7 +27,7 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background: -webkit-linear-gradient(180deg,#23379a,#09133c);
     background-attachment: fixed;
     color: var(--light);
     line-height: 1.6;
@@ -160,7 +160,7 @@ body {
 .form-title {
     font-size: 2rem;
     margin-bottom: 2rem;
-    background: var(--secondary);
+    background: white;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -323,7 +323,7 @@ body {
 .social-title {
     font-size: 2.5rem;
     margin-bottom: 2rem;
-    background: var(--secondary);
+    background: white;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

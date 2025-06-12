@@ -26,7 +26,7 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: -webkit-linear-gradient(180deg,#23379a,#09133c);
             background-attachment: fixed;
             color: var(--light);
             line-height: 1.6;
@@ -190,7 +190,7 @@
         .section-title {
             font-size: 2.5rem;
             margin-bottom: 2rem;
-            background: var(--secondary);
+            background: white;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -291,7 +291,7 @@
             font-size: 1.3rem;
             font-weight: bold;
             margin-bottom: 0.5rem;
-            background: var(--secondary);
+            background: white;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;

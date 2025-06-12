@@ -22,10 +22,11 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: -webkit-linear-gradient(180deg,#23379a,#09133c);
             background-attachment: fixed;
             color: var(--light);
             overflow-x: hidden;
+            
         }
 
         /* Header */
@@ -94,7 +95,7 @@
             position: absolute;
             top: -5px;
             right: -5px;
-            background: var(--secondary);
+            background: var(--primary); 
             color: white;
             border-radius: 50%;
             width: 20px;
@@ -160,7 +161,7 @@
         }
 
         .cta-button {
-            background: var(--secondary);
+            background: var(--primary);
             color: white;
             padding: 1rem 2rem;
             border: none;
@@ -170,11 +171,12 @@
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
+            
         }
 
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(240, 147, 251, 0.4);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
         /* Sections */
@@ -188,7 +190,7 @@
             font-size: 3rem;
             text-align: center;
             margin-bottom: 3rem;
-            background: var(--accent);
+            background: white;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -379,12 +381,8 @@
         .feature-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
-            background: var(--accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--light);
         }
-
         /* Footer */
         .footer {
             background: rgba(0, 0, 0, 0.3);
@@ -445,48 +443,54 @@
             border-radius: 50%;
             border-top-color: #fff;
             animation: spin 1s ease-in-out infinite;
-        }
+                        }
 
-.footer 
+                    
+                        .social-buttons {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            gap: 1rem;
+                            margin: 1.5rem auto;
+                            max-width: 600px;
+                            flex-wrap: wrap;
+                            text-align: center;
+                            padding: 0 20px;
+                        }
 
-    .social-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        margin: 1.5rem 0;
-    }
+                        .social-btn {
+                            padding: 0.8rem 1.5rem;
+                            border-radius: 25px;
+                            color: white;
+                            text-decoration: none;
+                            transition: transform 0.3s ease;
+                            text-align: center;
+                        }
 
-    .social-btn {
-        padding: 0.8rem 1.5rem;
-        border-radius: 25px;
-        color: white;
-        text-decoration: none;
-        transition: transform 0.3s ease;
-    }
+                        .social-btn:hover {
+                            transform: translateY(-3px);
+                        }
+x
+                        .tiktok {
+                            background: #000000;
+                        }
 
-    .social-btn:hover {
-        transform: translateY(-3px);
-    }
+                        .facebook {
+                            background: #1877f2;
+                        }
 
-    .tiktok {
-        background: #000000;
-    }
+                        .twitter {
+                            background: #060866;
+                        }
 
-    .facebook {
-        background: #1877f2;
-    }
+                        .instagram {
+                            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+                        }
 
-    .twitter {
-        background: #000000;
-    }
-
-    .instagram {
-        background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
-    }
-
-    .whatsapp {
-        background: #25d366;
-    }
+                        .whatsapp {
+                            background: #25d366;
+                        
+                        }                           
     .footer-contact {
             margin: 20px 0;
             text-align: center;

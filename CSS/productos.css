@@ -23,7 +23,7 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: -webkit-linear-gradient(180deg,#23379a,#09133c);
             background-attachment: fixed;
             color: var(--light);
             overflow-x: hidden;
@@ -206,7 +206,7 @@
         }
 
         .btn-filter {
-            background: var(--secondary);
+            background: var(--primary);
             color: white;
             border: none;
             padding: 0.8rem 2rem;
@@ -219,7 +219,7 @@
 
         .btn-filter:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(240, 147, 251, 0.4);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
         /* Categories Grid */
@@ -414,7 +414,7 @@
         }
 
         .btn-add-cart {
-            background: var(--secondary);
+            background: var(--primary);
             color: white;
             border: none;
             padding: 0.8rem 1.5rem;
@@ -427,7 +427,7 @@
 
         .btn-add-cart:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(240, 147, 251, 0.4);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
         }
 
         /* Footer */

@@ -515,7 +515,7 @@
 
         }
 
-        .footer-contact {
+.footer-contact {
             margin: 20px 0;
             text-align: center;
         }
@@ -536,4 +536,10 @@
         .footer-copyright p {
             font-size: 0.9rem;
             color: #888;
+        }
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3rem 2rem;
+            text-align: center;
+            backdrop-filter: blur(20px);
         }

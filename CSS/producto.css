@@ -351,7 +351,7 @@
         .spec-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
-            background: var(--accent);
+            
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;

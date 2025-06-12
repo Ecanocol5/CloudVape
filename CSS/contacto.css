@@ -614,3 +614,31 @@ body {
     cursor: pointer;
     margin-top: 1rem;
 }
+.footer-contact {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .footer-contact h3 {
+            font-size: 1rem;
+            color: #666;
+            font-weight: normal;
+        }
+
+        .footer-copyright {
+            margin-top: 20px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .footer-copyright p {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3rem 2rem;
+            text-align: center;
+            backdrop-filter: blur(20px);
+        }
